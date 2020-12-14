@@ -4,11 +4,10 @@ from bs4 import BeautifulSoup as soup
 import pandas as pd
 import datetime as dt
 
-## Integrate MongoDB Into the Web App
+
 def scrape_all():
     # Initiate headless driver for deployment
-    executable_path = {'executable_path': ChromeDriverManager().install()}
-    browser = Browser('chrome', **executable_path, headless=True)
+    browser = Browser("chrome", executable_path="chromedriver", headless=True)
 
     news_title, news_paragraph = mars_news(browser)
 
@@ -25,7 +24,7 @@ def scrape_all():
     browser.quit()
     return data
 
-## News Title and Paragraph
+
 def mars_news(browser):
 
     # Scrape Mars News
@@ -53,7 +52,7 @@ def mars_news(browser):
 
     return news_title, news_p
 
-## Featured Image
+
 def featured_image(browser):
     # Visit URL
     url = 'https://www.jpl.nasa.gov/spaceimages/?search=&category=Mars'
@@ -85,7 +84,6 @@ def featured_image(browser):
 
     return img_url
 
-## Mars Facts
 def mars_facts():
     # Add try/except for error handling
     try:
@@ -96,12 +94,11 @@ def mars_facts():
         return None
 
     # Assign columns and set index of dataframe
-    df.columns=['Description', 'Mars']
-    df.set_index('Description', inplace=True)
+    df.columns=['description', 'value']
+    df.set_index('description', inplace=True)
 
     # Convert dataframe into HTML format, add bootstrap
-    return df.to_html()
-
+    return df.to_html(classes="table table-striped")
 
 if __name__ == "__main__":
 

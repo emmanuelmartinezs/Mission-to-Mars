@@ -1,19 +1,20 @@
 # Mission to Mars
 
 ## Overview of Project
-> Now that Bobby has proven his SQL chops, his manager has given both of you two more assignments: determine the number of retiring employees per title, and identify employees who are eligible to participate in a mentorship program. Then, you’ll write a report that summarizes your analysis and helps prepare Bobby’s manager for the “silver tsunami” as many current employees reach retirement age. 
+> Robin's web app is looking good and functioning well, but she wants to add more polish to it. She had been admiring images of Mars’s hemispheres online and realized that the site is scraping-friendly. She would like to adjust the current web app to include all four of the hemisphere images. To do this, you’ll use BeautifulSoup and Splinter to scrape full-resolution images of Mars’s hemispheres and the titles of those images, store the scraped data on a Mongo database, use a web application to display the data, and alter the design of the web app to accommodate these images. 
 
-1. ***Deliverable 1***: The Number of Retiring Employees by Title
-2. ***Deliverable 2***: The Employees Eligible for the Mentorship Program
-3. ***Deliverable 3***: A written report on the employee database analysis [`README.md`](https://github.com/emmanuelmartinezs/Pewlett-Hackard-Analysis). 
+1. ***Deliverable 1***: Scrape Full-Resolution Mars Hemisphere Images and Titles
+2. ***Deliverable 2***: Update the Web App with Mars Hemisphere Images and Titles
+3. ***Deliverable 3***: Add Bootstrap 3 Components
+3. ***Deliverable 4***: A written report on the employee database analysis [`README.md`](https://github.com/emmanuelmartinezs/Mission-to-Mars). 
 
 ## Resources and Before Start Notes:
 
-* Data Source: `Employee_Database_challenge.sql`
-* Data Tools: PostgreSQL, pgAdmin
-* Software: pgAdmin 4.26, Python 3.8.3, Visual Studio Code 1.50.0, Flask Version 1.0.2
+* Data Source: `Mission_to_Mars.ipynb`, `app.py`, `scraping.py` and `index.html`
+* Data Tools: Jupyter Notebook, Python and MongoDB
+* Software: MongoDB, Python 3.8.3, Visual Studio Code 1.50.0, Flask Version 1.0.2
 
-For more information, read the [`Documentation on PostgreSQL and other data typess`](https://www.postgresql.org/docs/manuals/). 
+For more information, read the [`Documentation on MongoDB and other data typess`](https://docs.mongodb.com/). 
 
 ## HTML Keys
 Tables in HTML are basically made up of many smaller containers. The main container is the `<table />` tag. Inside the table is `<tbody />`, which is the body of the table—the headers, columns, and rows.
@@ -24,281 +25,216 @@ Tables in HTML are basically made up of many smaller containers. The main contai
 ![name-of-you-image](https://github.com/emmanuelmartinezs/Mission-to-Mars/blob/main/Resources/Images/s1.JPG?raw=true)
 
 
-In the graphic above, Table 1 has a primary key, or column of unique identifiers in common with Tables 2 and 4. Table 3's primary key is linked only to Table 2. These links trace the relationships between tables. There are times when we'll need to trace two or three links to get the exact data we need. In these cases, we'll pick the data we need from each table. Linking the tables together in this manner is called a join, a feature we'll get into later.
-
-In the second CSV file, `dept_emp.csv`, the "emp_no" column contains the primary key.
-
-![name-of-you-image](https://github.com/emmanuelmartinezs/Pewlett-Hackard-Analysis/blob/main/Resources/Images/s2.PNG?raw=true)
-
-We know this is the primary key because each number is unique. For example, the emp_no column holds employee numbers. Each employee will have only one number, and that number won't be used for any other employee.
-
-![name-of-you-image](https://github.com/emmanuelmartinezs/Pewlett-Hackard-Analysis/blob/main/Resources/Images/s3.PNG?raw=true)
-
-Open that file and take an initial look at the data.
-
-## Foreign Keys
-Foreign keys are just as important as primary keys. While primary keys contain unique identifiers for their dataset, a **foreign key** references another dataset's primary key.
-
-Think about it like a phone number. You have your own number. It's your number, assigned to your phone, and unique to you. This is your primary key. Your friend also has a primary key: his or her own phone number.
-
-When you save your friend's number in your phone, you're creating a reference to that person, also known as a foreign key. Your phone has lots of foreign keys (such as parents, doctors offices, friends, and other family), but only one primary key.
-
-Likewise, when your friend saves your number in their phone, your number is now a foreign key in their phone. Saving these keys connects the devices. They show the relationship between your phone and your friend's phone.
-
-Compare our first two CSVs again by looking at the following image.
-
-![name-of-you-image](https://github.com/emmanuelmartinezs/Pewlett-Hackard-Analysis/blob/main/Resources/Images/s4.PNG?raw=true)
-
-In this example, dept_no shows up in both datasets; as an identifier (or primary key) in one and as a reference (or foreign key) in the other. This demonstrates the link between employees and which department they work in.
-
-We could continue to look for connections between the datasets, or we could create a roadmap of the content. Our roadmap would serve as a quick reference diagramming the different datasets and their interconnections. Additionally, it could be used as a reference guide later, when we begin to create queries to access all of the data.
-
-## Table Structure
-When working in Excel and Visual Basic for Applications (VBA), we're working directly with worksheets with data. In SQL, the same worksheets we have been exploring are organized into tables instead. They are similar to DataFrames in that they have headers and indexes, with data in columns and rows. Take a look at the following images.
-
-![name-of-you-image](https://github.com/emmanuelmartinezs/Pewlett-Hackard-Analysis/blob/main/Resources/Images/s5.PNG?raw=true)
-
-Next we'll cover how table structure comes into play when creating an entity relationship diagram.
-
-## Entity Relationship Diagrams (ERDs)
-An entity relationship diagram (ERD) is a type of flowchart that highlights different tables and their relationships to each other. The ERD does not include any actual data, but it does capture the following pertinent information from each CSV file:
-
-* Primary keys
-* Foreign keys
-* Data types for each column
-
-The ERD also shows the flow of information from one table to another, as captured in the image below:
-
-![name-of-you-image](https://github.com/emmanuelmartinezs/Pewlett-Hackard-Analysis/blob/main/Resources/Images/s6.PNG?raw=true)
-
-In addition to creating new databases, ERDs are used to document existing databases. The visual representation of the tables gives a deeper understanding of the data and the database as a whole.
-
-When creating a diagram, we need to fully understand all of the data being inserted. Database components include tables, known as **entities**, with data, known as **attributes**.
-
-![name-of-you-image](https://github.com/emmanuelmartinezs/Pewlett-Hackard-Analysis/blob/main/Resources/Images/s7.PNG?raw=true)
-
-Data types include Booleans, integers, and varying characters (i.e., within a string).
-
-There are three types of ERDs: **conceptual, logical,** and **physical**. Each one builds upon the other—you need the conceptual ERD to build a logical ERD to build a physical ERD. We'll learn how to create ERDs later in this module.
-
-## IMPORTANT TO KNOW
-
-### Conceptual Diagrams
-A conceptual diagram is an ERD in its simplest form. To create one, we only need two things: a table name and column headers.
-
-It's simple because we're creating just the concept of the diagram. By covering only the basics, it's easier to capture the main points. If we tried to capture everything at once (data types, location of the primary and foreign keys, etc.), we're more likely to overlook a crucial item.
-
-![name-of-you-image](https://github.com/emmanuelmartinezs/Pewlett-Hackard-Analysis/blob/main/Resources/Images/s10.PNG?raw=true)
-
-### Logical Diagrams
-Logical diagrams contain all of the same information that a conceptual diagram does, but the table is updated to include data types and primary keys.
-
-Returning to the Quick DBD webpage, let's update our schema. Because we already took an initial look at the worksheet, we have already identified the primary key and know what type of data we're working with. Using the following syntax, update our Departments schema:
-
-Add "varchar pk" to dept_no.
-Add "varchar" to dept_name.
-We use varchar (Links to an external site.) in these columns because the fields contain characters of varying length. Adding "pk" in the schema next to column indicates that column as a primary key. The table updated to reflect the changes in the text editor. A key symbol appears next to the dept_no line, indicating that it is the table's primary key, and varchar is added to indicate its type.
-
-![name-of-you-image](https://github.com/emmanuelmartinezs/Pewlett-Hackard-Analysis/blob/main/Resources/Images/s9.PNG?raw=true)
-
-### Physical Diagrams
-Physical diagrams portray the physical relationship, or how the data is connected, between each table. There are several different relationships available to keep in mind when making these connections, as shown below:
-
-![name-of-you-image](https://github.com/emmanuelmartinezs/Pewlett-Hackard-Analysis/blob/main/Resources/Images/s8.PNG?raw=true)
 
 
-
-## Deliverable 1:  The Number of Retiring Employees by Title
+## Deliverable 1:  Scrape Full-Resolution Mars Hemisphere Images and Titles
 ### Deliverable Requirements:
-Using the ERD you created in this module as a reference and your knowledge of SQL queries, create a Retirement Titles table that holds all the titles of current employees who were born between January 1, 1952 and December 31, 1955. Because some employees may have multiple titles in the database—for example, due to promotions—you’ll need to use the `DISTINCT ON` statement to create a table that contains the most recent title of each employee. Then, use the `COUNT()` function to create a final table that has the number of retirement-age employees by most recent job title.
+Using BeautifulSoup and Splinter, you’ll scrape full-resolution images of Mars’s hemispheres and the titles of those images.
 
-1. A query is written and executed to create a Retirement Titles table for employees who are born between January 1, 1952 and December 31, 1955 
-2. The Retirement Titles table is exported as `retirement_titles.csv`
-3. ​A query is written and executed to create a Unique Titles table that contains the employee number, first and last name, and most recent title.
-4. The Unique Titles table is exported as `unique_titles.csv`  
-5. A query is written and executed to create a Retiring Titles table that contains the number of titles filled by employees who are retiring. 
-6. The Retiring Titles table is exported as `retiring_titles.csv`
+1. Make a copy of your `Mission_to_Mars.ipynb` file, and rename it `Mission_to_Mars_Challenge.ipynb`. 
+2. Download the `Mission_to_Mars_Challenge_starter_code.ipynb`, copy the starter code, and paste at the end of your `Mission_to_Mars_Challenge.ipynb` file.
+3. ​In Step 1, use your browser to visit the [`Mars Hemispheres`](https://astrogeology.usgs.gov/search/results?q=hemisphere+enhanced&k1=target&v1=Mars) website to view the hemisphere images.
+4. Use the DevTools to inspect the page for the proper elements to scrape. You will need to retrieve the full-resolution image for each of Mars's hemispheres.
 
  
 ### Results with detail analysis:
 
-1. **A query is written and executed to create a Retirement Titles table for employees who are born between January 1, 1952 and December 31, 1955.**
+1. **Make a copy of your `Mission_to_Mars.ipynb` file, and rename it `Mission_to_Mars_Challenge.ipynb`.**
 
-> Image with `SQL`, `pgAdmin` & `QuickDBD` Code below.
+> Image with `Python`, `MongoDB` & `HTML` Code below.
 
 **Code and Image**
 
 
-````SQL
--- Follow the instructions below to complete Deliverable 1.
-SELECT e.emp_no,
-       e.first_name,
-       e.last_name,
-       t.title,
-       t.from_date,
-       t.to_date
-INTO retirement_titles
-FROM employees as e
-INNER JOIN titles as t
-ON (e.emp_no = t.emp_no)
-WHERE (e.birth_date BETWEEN '1952-01-01' AND '1955-12-31')
-order by e.emp_no;
+````python
+from flask import Flask, render_template
+from flask_pymongo import PyMongo
+import scraping
+
+app = Flask(__name__)
 ````
 
-![name-of-you-image](https://github.com/emmanuelmartinezs/Pewlett-Hackard-Analysis/blob/main/Resources/Images/1.1.PNG?raw=true)
+![name-of-you-image](https://github.com/emmanuelmartinezs/Mission-to-Mars/blob/main/Resources/Images/1.1.JPG?raw=true)
 
-2. **The Retirement Titles table is exported as `retirement_titles.csv`**
+2. **Download the `Mission_to_Mars_Challenge_starter_code.ipynb`, copy the starter code, and paste at the end of your `Mission_to_Mars_Challenge.ipynb` file.**
 
-> Exported `retirement_titles.csv` Image below.
-
-**Code and Image**
-
-![name-of-you-image](https://github.com/emmanuelmartinezs/Pewlett-Hackard-Analysis/blob/main/Resources/Images/1.1r.PNG?raw=true)
-
-3. ​***A query is written and executed to create a Unique Titles table that contains the employee number, first and last name, and most recent title.**
-
-> Image with `SQL`, `pgAdmin` & `QuickDBD` Code below.
+> Image with `Python`, `MongoDB` & `HTML` Code below.
 
 **Code and Image**
 
 
-````SQL
--- Use Dictinct with Orderby to remove duplicate rows
-SELECT DISTINCT ON (emp_no) emp_no,
-first_name,
-last_name,
-title
-INTO unique_titles
-FROM retirement_titles
-ORDER BY emp_no, title DESC;
+````python
+from flask import Flask, render_template
+from flask_pymongo import PyMongo
+import scraping
+
+app = Flask(__name__)
 ````
 
-![name-of-you-image](https://github.com/emmanuelmartinezs/Pewlett-Hackard-Analysis/blob/main/Resources/Images/1.2.PNG?raw=true)
+![name-of-you-image](https://github.com/emmanuelmartinezs/Mission-to-Mars/blob/main/Resources/Images/1.2.JPG?raw=true)
 
-4. **The Unique Titles table is exported as `unique_titles.csv`**
+3. ​***In Step 1, use your browser to visit the [`Mars Hemispheres`](https://astrogeology.usgs.gov/search/results?q=hemisphere+enhanced&k1=target&v1=Mars) website to view the hemisphere images.**
 
-> Exported `unique_titles.csv` Image below.
-
-**Code and Image**
-
-![name-of-you-image](https://github.com/emmanuelmartinezs/Pewlett-Hackard-Analysis/blob/main/Resources/Images/1.2r.PNG?raw=true)
-
-5. **A query is written and executed to create a Retiring Titles table that contains the number of titles filled by employees who are retiring.**
-
-> Image with `SQL`, `pgAdmin` & `QuickDBD` Code below.
+> Image with `Python`, `MongoDB` & `HTML` Code below.
 
 **Code and Image**
 
 
-````SQL
--- Retrieve the number of employees by their most recent job title who are about to retire.
-SELECT COUNT(ut.emp_no),
-ut.title
-INTO retiring_titles
-FROM unique_titles as ut
-GROUP BY title 
-ORDER BY COUNT(title) DESC;
+````python
+from flask import Flask, render_template
+from flask_pymongo import PyMongo
+import scraping
+
+app = Flask(__name__)
 ````
 
-![name-of-you-image](https://github.com/emmanuelmartinezs/PyBer_Analysis/blob/main/Resources/Images/1.3.PNG?raw=true)
+![name-of-you-image](https://github.com/emmanuelmartinezs/Mission-to-Mars/blob/main/Resources/Images/1.3.JPG?raw=true)
 
-6. **The Retiring Titles table is exported as `retiring_titles.csv`**
+4. **Use the DevTools to inspect the page for the proper elements to scrape. You will need to retrieve the full-resolution image for each of Mars's hemispheres.**
 
-> Exported `retiring_titles.csv` Image below.
+> Image with `Python`, `MongoDB` & `HTML` Code below.
 
 **Code and Image**
 
-![name-of-you-image](https://github.com/emmanuelmartinezs/Pewlett-Hackard-Analysis/blob/main/Resources/Images/1.3r.PNG?raw=true)
+
+````python
+from flask import Flask, render_template
+from flask_pymongo import PyMongo
+import scraping
+
+app = Flask(__name__)
+````
+
+![name-of-you-image](https://github.com/emmanuelmartinezs/Mission-to-Mars/blob/main/Resources/Images/1.4.JPG?raw=true)
 
 
 
-## Deliverable 2: The Employees Eligible for the Mentorship Program
+## Deliverable 2: Update the Web App with Mars’s Hemisphere Images and Titles
 ### Deliverable Requirements:
-Using the ERD you created in this module as a reference and your knowledge of SQL queries, create a mentorship-eligibility table that holds the current employees who were born between January 1, 1965 and December 31, 1965.
+Using your Python and HTML skills, you’ll add the code you created in Deliverable 1 to your `scraping.py` file, update your Mongo database, and modify your `index.html` file so the webpage contains all the information you collected in this module as well as the full-resolution image and title for each hemisphere image
 
-1. A query is written and executed to create a Mentorship Eligibility table for current employees who were born between January 1, 1965 and December 31, 1965.
-2. The Mentorship Eligibility table is exported and saved as `mentorship_eligibilty.csv`
+1. The `scraping.py` file contains code that retrieves the full-resolution image URL and title for each hemisphere image. 
+2. The Mongo database is updated to contain the full-resolution image URL and title for each hemisphere image.
+3. ​The index.html file contains code that will display the full-resolution image URL and title for each hemisphere image.
+4. After the scraping has been completed, the web app contains all the information from this module and the full-resolution images and titles for the four hemisphere images.
 
-
+ 
 ### Results with detail analysis:
 
-1. **A query is written and executed to create a Mentorship Eligibility table for current employees who were born between January 1, 1965 and December 31, 1965.**
+1. **The `scraping.py` file contains code that retrieves the full-resolution image URL and title for each hemisphere image.**
 
-> Image with `SQL`, `pgAdmin` & `QuickDBD` Code below.
+> Image with `Python`, `MongoDB` & `HTML` Code below.
 
 **Code and Image**
 
 
-````SQL
--- Write a query to create a Mentorship Eligibility table that holds the employees who are eligible to participate in a mentorship program.
-SELECT DISTINCT ON(e.emp_no) e.emp_no, 
-    e.first_name, 
-    e.last_name, 
-    e.birth_date,
-    de.from_date,
-    de.to_date,
-    t.title
-INTO mentorship_eligibilty
-FROM employees as e
-Left outer Join dept_emp as de
-ON (e.emp_no = de.emp_no)
-Left outer Join titles as t
-ON (e.emp_no = t.emp_no)
-WHERE (e.birth_date BETWEEN '1965-01-01' AND '1965-12-31')
-ORDER BY e.emp_no;
+````python
+from flask import Flask, render_template
+from flask_pymongo import PyMongo
+import scraping
+
+app = Flask(__name__)
 ````
 
-![name-of-you-image](https://github.com/emmanuelmartinezs/Pewlett-Hackard-Analysis/blob/main/Resources/Images/2.1.PNG?raw=true)
+![name-of-you-image](https://github.com/emmanuelmartinezs/Mission-to-Mars/blob/main/Resources/Images/2.1.JPG?raw=true)
 
-2. **The Mentorship Eligibility table is exported and saved as `mentorship_eligibilty.csv`"**
+2. **The Mongo database is updated to contain the full-resolution image URL and title for each hemisphere image.**
 
-> Exported `retiring_titles.csv` Image below.
+> Image with `Python`, `MongoDB` & `HTML` Code below.
 
 **Code and Image**
 
-![name-of-you-image](https://github.com/emmanuelmartinezs/Pewlett-Hackard-Analysis/blob/main/Resources/Images/2.1r.PNG?raw=true)
+
+````python
+from flask import Flask, render_template
+from flask_pymongo import PyMongo
+import scraping
+
+app = Flask(__name__)
+````
+
+![name-of-you-image](https://github.com/emmanuelmartinezs/Mission-to-Mars/blob/main/Resources/Images/2.2.JPG?raw=true)
+
+3. ​***The index.html file contains code that will display the full-resolution image URL and title for each hemisphere image.**
+
+> Image with `Python`, `MongoDB` & `HTML` Code below.
+
+**Code and Image**
+
+
+````python
+from flask import Flask, render_template
+from flask_pymongo import PyMongo
+import scraping
+
+app = Flask(__name__)
+````
+
+![name-of-you-image](https://github.com/emmanuelmartinezs/Mission-to-Mars/blob/main/Resources/Images/2.3.JPG?raw=true)
+
+4. **After the scraping has been completed, the web app contains all the information from this module and the full-resolution images and titles for the four hemisphere images.**
+
+> Image with `Python`, `MongoDB` & `HTML` Code below.
+
+**Code and Image**
+
+
+````python
+from flask import Flask, render_template
+from flask_pymongo import PyMongo
+import scraping
+
+app = Flask(__name__)
+````
+
+![name-of-you-image](https://github.com/emmanuelmartinezs/Mission-to-Mars/blob/main/Resources/Images/2.4.JPG?raw=true)
 
 
 
-## Deliverable 3: A written report on the employee database analysis
-### The analysis should contain the following:
+## Deliverable 3: Add Bootstrap 3 Components
+### Deliverable Requirements:
+For this part of the Challenge, update your web app to make it mobile-responsive, and add two additional Bootstrap 3 components to make it stand out.
 
-1. **Overview of the analysis** 
-* Explain the purpose of this analysis.:
+1. The webpage is mobile-responsive. 
+2. Two additional Bootstrap 3 components are used to style the webpage.
 
-    > In this deliverable, Bobby was tasked to determine the number of retiring employees per title, and identify employees who are eligible to participate in a mentorship program. Then, you’ll write a report that summarizes your analysis and helps prepare Bobby’s manager for the “silver tsunami” as many current employees reach retirement age.
+ 
+### Results with detail analysis:
+
+1. **The webpage is mobile-responsive.**
+
+> Image with `Python`, `MongoDB` & `HTML` Code below.
+
+**Code and Image**
 
 
-2. **Results** 
-* Provide a bulleted list with four major points from the two analysis deliverables. Use images as support where needed:
+````python
+from flask import Flask, render_template
+from flask_pymongo import PyMongo
+import scraping
 
-    > * From the finding of the eligible retirees, High Percentage of the workforce could retire at any given time. 
-    > * From the job titles of the eligible retirees, the breakdown is below.
-    > * 32,452 Staff
-    > * 29,415 Senior Engineer
-    > * 14,221 Engineer
-    > * 8,047 Senior Staff
-    > * 4,502 Technique Leader
-    > * 1,761 Assistant Engineer
+app = Flask(__name__)
+````
+
+![name-of-you-image](https://github.com/emmanuelmartinezs/Mission-to-Mars/blob/main/Resources/Images/3.1.JPG?raw=true)
     
-**Image Below** 
     
-![name-of-you-image](https://github.com/emmanuelmartinezs/Pewlett-Hackard-Analysis/blob/main/Resources/Images/3.2.PNG?raw=true)
+2. **Two additional Bootstrap 3 components are used to style the webpage.**
+
+> Image with `Python`, `MongoDB` & `HTML` Code below.
+
+**Code and Image**
 
 
-3. **Summary** 
-* Provide high-level responses to the following questions, then provide two additional queries or tables that may provide more insight into the upcoming "silver tsunami.":
+````python
+from flask import Flask, render_template
+from flask_pymongo import PyMongo
+import scraping
 
-    > **1)** How many roles will need to be filled as the "silver tsunami" begins to make an impact?.
+app = Flask(__name__)
+````
 
-    90,398 roles are in urgent need to be filled out as soon as the workforce starts retiring at any given time. 
-     
-    > **2)** Are there enough qualified, retirement-ready employees in the departments to mentor the next generation of Pewlett Hackard employees?  
+![name-of-you-image](https://github.com/emmanuelmartinezs/Mission-to-Mars/blob/main/Resources/Images/3.2.JPG?raw=true)
 
-    No, we have 1,940 employees who are eligible to participate in a mentorship program. 
-
-![name-of-you-image](https://github.com/emmanuelmartinezs/Pewlett-Hackard-Analysis/blob/main/Resources/Images/3.3.2.PNG?raw=true)
-    
-    
 
 #### # Mission to Mars Analysis Completed by Emmanuel Martinez

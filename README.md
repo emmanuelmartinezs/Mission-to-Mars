@@ -6,7 +6,7 @@
 1. ***Deliverable 1***: Scrape Full-Resolution Mars Hemisphere Images and Titles
 2. ***Deliverable 2***: Update the Web App with Mars Hemisphere Images and Titles
 3. ***Deliverable 3***: Add Bootstrap 3 Components
-3. ***Deliverable 4***: A written report on the employee database analysis [`README.md`](https://github.com/emmanuelmartinezs/Mission-to-Mars). 
+4. ***Extra***: A written report on the employee database analysis [`README.md`](https://github.com/emmanuelmartinezs/Mission-to-Mars). 
 
 ## Resources and Before Start Notes:
 

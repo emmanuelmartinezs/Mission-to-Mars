@@ -43,6 +43,8 @@ def mars_news(browser):
     browser.visit(url)
 
     #Optional delay for website 
+    # Here we are searching for elements with a specific combination of tag (ul) and (li) and attriobute (item_lit) and (slide)
+    # Ex. being <ul class= "item_list">
     browser.is_element_present_by_css("ul.item_list li.slide", wait_time=1)
 
     # HTML Parser. Convert the brpwser html to a soup object and then quit the browser
@@ -51,7 +53,11 @@ def mars_news(browser):
 
     # Add try/except for error handling
     try:
+        #slide_elem looks for <ul /> tags and descendents <li />
+        # the period(.) is used for selecting classes such as item_list
         slide_elem= news_soup.select_one('ul.item_list li.slide')
+
+        # Chained the (.find) to slide_elem which says this variable holds lots of info, so look inside to find this specific entity
         # Get Title
         news_title=slide_elem.find('div', class_= 'content_title').get_text()
         # Get article body
@@ -76,8 +82,10 @@ def featured_image(browser):
     full_image_elem.click()
 
     # Find the more info button and click that 
+    # is_element_present_by_text() method to search for an element that has the provided text
     browser.is_element_present_by_text('more info', wait_time=1)
 
+    # will take our string 'more info' and add link associated with it, then click
     more_info_elem=browser.links.find_by_partial_text('more info')
     more_info_elem.click()
 
@@ -87,8 +95,12 @@ def featured_image(browser):
 
     # Add try/except for error handling
     try:
+        # Find the relative image url 
+        # The 'figure.lede' references the <figure /> tag and its class=lede
+        # the 'a' is the next tag nested inside the <figure /> tag, as well as the 'img' tag 
+        # the .get('src') pulls the link to the image
 
-        # We are telling soup to go to figure tag, then within that look for an 'a' tag then within that look for a 'img' tag
+        # WE are telling soup to go to figure tag, then within that look for an 'a' tag then within that look for a 'img' tag
         img_url_rel= img_soup.select_one('figure.lede a img').get("src")
     
     except AttributeError:
@@ -118,6 +130,7 @@ def mars_facts():
 
     #Convert back to HTML format, add bootstrap
     return df.to_html()
+
 
 ## > SCRAPE HEMISPHERE <
 

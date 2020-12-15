@@ -1,3 +1,7 @@
+## MISSION TO MARS CHALLENGE
+## By Emmanuel Martinez 
+
+# Import Flask, PyMongo, and scraping.py 
 from flask import Flask, render_template
 from flask_pymongo import PyMongo
 import scraping
@@ -24,3 +28,6 @@ def scrape():
 
 if __name__ == "__main__":
     app.run(debug=True)
+
+
+# by Emmanuel Martinez

@@ -237,6 +237,8 @@ def mars_news(browser):
     browser.visit(url)
 
     #Optional delay for website 
+    # Here we are searching for elements with a specific combination of tag (ul) and (li) and attriobute (item_lit) and (slide)
+    # Ex. being <ul class= "item_list">
     browser.is_element_present_by_css("ul.item_list li.slide", wait_time=1)
 
     # HTML Parser. Convert the brpwser html to a soup object and then quit the browser
@@ -245,7 +247,11 @@ def mars_news(browser):
 
     # Add try/except for error handling
     try:
+        #slide_elem looks for <ul /> tags and descendents <li />
+        # the period(.) is used for selecting classes such as item_list
         slide_elem= news_soup.select_one('ul.item_list li.slide')
+
+        # Chained the (.find) to slide_elem which says this variable holds lots of info, so look inside to find this specific entity
         # Get Title
         news_title=slide_elem.find('div', class_= 'content_title').get_text()
         # Get article body
@@ -270,8 +276,10 @@ def featured_image(browser):
     full_image_elem.click()
 
     # Find the more info button and click that 
+    # is_element_present_by_text() method to search for an element that has the provided text
     browser.is_element_present_by_text('more info', wait_time=1)
 
+    # will take our string 'more info' and add link associated with it, then click
     more_info_elem=browser.links.find_by_partial_text('more info')
     more_info_elem.click()
 
@@ -281,8 +289,12 @@ def featured_image(browser):
 
     # Add try/except for error handling
     try:
+        # Find the relative image url 
+        # The 'figure.lede' references the <figure /> tag and its class=lede
+        # the 'a' is the next tag nested inside the <figure /> tag, as well as the 'img' tag 
+        # the .get('src') pulls the link to the image
 
-        # We are telling soup to go to figure tag, then within that look for an 'a' tag then within that look for a 'img' tag
+        # WE are telling soup to go to figure tag, then within that look for an 'a' tag then within that look for a 'img' tag
         img_url_rel= img_soup.select_one('figure.lede a img').get("src")
     
     except AttributeError:
@@ -312,6 +324,7 @@ def mars_facts():
 
     #Convert back to HTML format, add bootstrap
     return df.to_html()
+
 
 ## > SCRAPE HEMISPHERE <
 
@@ -364,7 +377,10 @@ if __name__== "__main__":
 
 
 ````python
-from flask import Flask, render_template
+## MISSION TO MARS CHALLENGE
+## By Emmanuel Martinez 
+
+# Import Flask, PyMongo, and scraping.py 
 from flask import Flask, render_template
 from flask_pymongo import PyMongo
 import scraping
@@ -391,6 +407,9 @@ def scrape():
 
 if __name__ == "__main__":
     app.run(debug=True)
+
+
+# by Emmanuel Martinez
 ````
 
 ![name-of-you-image](https://github.com/emmanuelmartinezs/Mission-to-Mars/blob/main/Resources/Images/2.2.JPG?raw=true)
@@ -421,7 +440,7 @@ if __name__ == "__main__":
   <body>
     <div class="container">
       <!-- Add Jumbotron to Header -->
-      <div class="jumbotron text-center" style="background-image: url('https://cdn.hipwallpaper.com/i/20/93/icQLoP.jpg'); background-position: center; background-size: cover;height: 250px;">
+      <div class="jumbotron text-center" style="background-image: url('https://wallpapercave.com/wp/wp2461878.jpg'); background-position: center; background-size: cover;height: 250px;">
         <h1 style="color:white">Mission to Mars</h1>
         <!-- Add a button to activate scraping script -->
         <p><a class="btn btn-danger btn-xs" href="/scrape" role="button">Scrape New Data</a></p>
@@ -475,6 +494,7 @@ if __name__ == "__main__":
               <h3>{{hemisphere.title}}</h3>
             </div>
           </div>
+          
         </div>
         {% endfor %}
       </div>
@@ -491,6 +511,7 @@ if __name__ == "__main__":
 
 **Code Image and Browser In Use**
 
+![name-of-you-image](https://github.com/emmanuelmartinezs/Mission-to-Mars/blob/main/Resources/Images/SC.JPG?raw=true)
 
 ![name-of-you-image](https://github.com/emmanuelmartinezs/Mission-to-Mars/blob/main/Resources/Images/2.4.JPG?raw=true)
 
@@ -510,19 +531,37 @@ For this part of the Challenge, update your web app to make it mobile-responsive
 
 > Image with `Python`, `MongoDB` & `HTML` Code below.
 
+**Webpage - View**
+
+![name-of-you-image](https://github.com/emmanuelmartinezs/Mission-to-Mars/blob/main/Resources/Images/MP.JPG?raw=true)
+![name-of-you-image](https://github.com/emmanuelmartinezs/Mission-to-Mars/blob/main/Resources/Images/MP1.JPG?raw=true)
+![name-of-you-image](https://github.com/emmanuelmartinezs/Mission-to-Mars/blob/main/Resources/Images/MP2.JPG?raw=true)
+
+
 **iPhone X - Mobile View**
 
 ![name-of-you-image](https://github.com/emmanuelmartinezs/Mission-to-Mars/blob/main/Resources/Images/3.1.JPG?raw=true)
+![name-of-you-image](https://github.com/emmanuelmartinezs/Mission-to-Mars/blob/main/Resources/Images/3.1.1.JPG?raw=true)
+![name-of-you-image](https://github.com/emmanuelmartinezs/Mission-to-Mars/blob/main/Resources/Images/3.1.2.JPG?raw=true)
+![name-of-you-image](https://github.com/emmanuelmartinezs/Mission-to-Mars/blob/main/Resources/Images/3.1.3.JPG?raw=true)
     
 
-**iPad - Tablet View**
+**iPad Pro - Tablet View**
 
-![name-of-you-image](https://github.com/emmanuelmartinezs/Mission-to-Mars/blob/main/Resources/Images/3.1.1.JPG?raw=true)
+![name-of-you-image](https://github.com/emmanuelmartinezs/Mission-to-Mars/blob/main/Resources/Images/3.2.JPG?raw=true)
+![name-of-you-image](https://github.com/emmanuelmartinezs/Mission-to-Mars/blob/main/Resources/Images/3.2.1.JPG?raw=true)
+
+
+![name-of-you-image](https://github.com/emmanuelmartinezs/Mission-to-Mars/blob/main/Resources/Images/3.2.2.JPG?raw=true)
+![name-of-you-image](https://github.com/emmanuelmartinezs/Mission-to-Mars/blob/main/Resources/Images/3.2.3.JPG?raw=true)
 
 
 **Galaxy S5 - Mobile View**
 
-![name-of-you-image](https://github.com/emmanuelmartinezs/Mission-to-Mars/blob/main/Resources/Images/3.1.2.JPG?raw=true)
+![name-of-you-image](https://github.com/emmanuelmartinezs/Mission-to-Mars/blob/main/Resources/Images/3.3.JPG?raw=true)
+![name-of-you-image](https://github.com/emmanuelmartinezs/Mission-to-Mars/blob/main/Resources/Images/3.3.1.JPG?raw=true)
+![name-of-you-image](https://github.com/emmanuelmartinezs/Mission-to-Mars/blob/main/Resources/Images/3.3.2.JPG?raw=true)
+![name-of-you-image](https://github.com/emmanuelmartinezs/Mission-to-Mars/blob/main/Resources/Images/3.3.3.JPG?raw=true)
 
 
 2. **Two additional Bootstrap 3 components are used to style the webpage.**
@@ -545,7 +584,7 @@ For this part of the Challenge, update your web app to make it mobile-responsive
   </head>
 ````
 
-![name-of-you-image](https://github.com/emmanuelmartinezs/Mission-to-Mars/blob/main/Resources/Images/3.2.JPG?raw=true)
+![name-of-you-image](https://github.com/emmanuelmartinezs/Mission-to-Mars/blob/main/Resources/Images/3.4.JPG?raw=true)
 
 
 #### # Mission to Mars Analysis Completed by Emmanuel Martinez

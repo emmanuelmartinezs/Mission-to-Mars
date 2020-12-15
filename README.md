@@ -533,35 +533,63 @@ For this part of the Challenge, update your web app to make it mobile-responsive
 
 **Webpage - View**
 
+> 1st Page
 ![name-of-you-image](https://github.com/emmanuelmartinezs/Mission-to-Mars/blob/main/Resources/Images/MP.JPG?raw=true)
+
+> 2nd Page
 ![name-of-you-image](https://github.com/emmanuelmartinezs/Mission-to-Mars/blob/main/Resources/Images/MP1.JPG?raw=true)
+
+> 3rd Page
 ![name-of-you-image](https://github.com/emmanuelmartinezs/Mission-to-Mars/blob/main/Resources/Images/MP2.JPG?raw=true)
+
 
 
 **iPhone X - Mobile View**
 
+> 1st Page
 ![name-of-you-image](https://github.com/emmanuelmartinezs/Mission-to-Mars/blob/main/Resources/Images/3.1.JPG?raw=true)
+
+> 2nd Page
 ![name-of-you-image](https://github.com/emmanuelmartinezs/Mission-to-Mars/blob/main/Resources/Images/3.1.1.JPG?raw=true)
+
+> 3rd Page
 ![name-of-you-image](https://github.com/emmanuelmartinezs/Mission-to-Mars/blob/main/Resources/Images/3.1.2.JPG?raw=true)
+
+> 4rd Page
 ![name-of-you-image](https://github.com/emmanuelmartinezs/Mission-to-Mars/blob/main/Resources/Images/3.1.3.JPG?raw=true)
     
 
 **iPad Pro - Tablet View**
 
+> 1st Page
 ![name-of-you-image](https://github.com/emmanuelmartinezs/Mission-to-Mars/blob/main/Resources/Images/3.2.JPG?raw=true)
+
+> 2nd Page
 ![name-of-you-image](https://github.com/emmanuelmartinezs/Mission-to-Mars/blob/main/Resources/Images/3.2.1.JPG?raw=true)
 
+**Flip Tablet**
 
+> 1st Page
 ![name-of-you-image](https://github.com/emmanuelmartinezs/Mission-to-Mars/blob/main/Resources/Images/3.2.2.JPG?raw=true)
+
+> 2nd Page
 ![name-of-you-image](https://github.com/emmanuelmartinezs/Mission-to-Mars/blob/main/Resources/Images/3.2.3.JPG?raw=true)
 
 
 **Galaxy S5 - Mobile View**
 
+> 1st Page
 ![name-of-you-image](https://github.com/emmanuelmartinezs/Mission-to-Mars/blob/main/Resources/Images/3.3.JPG?raw=true)
+
+> 2nd Page
 ![name-of-you-image](https://github.com/emmanuelmartinezs/Mission-to-Mars/blob/main/Resources/Images/3.3.1.JPG?raw=true)
+
+> 3rd Page
 ![name-of-you-image](https://github.com/emmanuelmartinezs/Mission-to-Mars/blob/main/Resources/Images/3.3.2.JPG?raw=true)
+
+> 4rd Page
 ![name-of-you-image](https://github.com/emmanuelmartinezs/Mission-to-Mars/blob/main/Resources/Images/3.3.3.JPG?raw=true)
+
 
 
 2. **Two additional Bootstrap 3 components are used to style the webpage.**

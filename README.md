@@ -41,6 +41,7 @@ Using BeautifulSoup and Splinter, you’ll scrape full-resolution images of Mars
 
 1. **Make a copy of your `Mission_to_Mars.ipynb` file, and rename it `Mission_to_Mars_Challenge.ipynb`.**
 
+
 > Image with `Python`, `MongoDB` & `HTML` Code below.
 
 **Code and Image**
@@ -61,7 +62,10 @@ from webdriver_manager.chrome import ChromeDriverManager
 
 ![name-of-you-image](https://github.com/emmanuelmartinezs/Mission-to-Mars/blob/main/Resources/Images/1.1.1.JPG?raw=true)
 
+
+
 2. **Download the `Mission_to_Mars_Challenge_starter_code.ipynb`, copy the starter code, and paste at the end of your `Mission_to_Mars_Challenge.ipynb` file.**
+
 
 > Image with `Python`, `MongoDB` & `HTML` Code below.
 
@@ -82,7 +86,10 @@ import pandas as pd
 
 ![name-of-you-image](https://github.com/emmanuelmartinezs/Mission-to-Mars/blob/main/Resources/Images/1.2.1.JPG?raw=true)
 
+
+
 3. ​**In Step 1, use your browser to visit the [`Mars Hemispheres`](https://astrogeology.usgs.gov/search/results?q=hemisphere+enhanced&k1=target&v1=Mars) website to view the hemisphere images.**
+
 
 > Image with `Python`, `MongoDB` & `HTML` Code below.
 
@@ -102,7 +109,10 @@ hemisphere_image_urls = []
 
 ![name-of-you-image](https://github.com/emmanuelmartinezs/Mission-to-Mars/blob/main/Resources/Images/1.3.1.JPG?raw=true)
 
+
+
 4. **Use the DevTools to inspect the page for the proper elements to scrape. You will need to retrieve the full-resolution image for each of Mars's hemispheres.**
+
 
 > Image with `Python`, `MongoDB` & `HTML` Code below.
 
@@ -156,6 +166,9 @@ hemisphere_image_urls
 
 ![name-of-you-image](https://github.com/emmanuelmartinezs/Mission-to-Mars/blob/main/Resources/Images/1.4.4.JPG?raw=true)
 
+
+
+
 ## Deliverable 2: Update the Web App with Mars’s Hemisphere Images and Titles
 ### Deliverable Requirements:
 Using your Python and HTML skills, you’ll add the code you created in Deliverable 1 to your `scraping.py` file, update your Mongo database, and modify your `index.html` file so the webpage contains all the information you collected in this module as well as the full-resolution image and title for each hemisphere image
@@ -165,10 +178,13 @@ Using your Python and HTML skills, you’ll add the code you created in Delivera
 3. ​The index.html file contains code that will display the full-resolution image URL and title for each hemisphere image.
 4. After the scraping has been completed, the web app contains all the information from this module and the full-resolution images and titles for the four hemisphere images.
 
+
  
 ### Results with detail analysis:
 
+
 1. **The `scraping.py` file contains code that retrieves the full-resolution image URL and title for each hemisphere image.**
+
 
 > Image with `Python`, `MongoDB` & `HTML` Code below.
 
@@ -184,24 +200,27 @@ Using your Python and HTML skills, you’ll add the code you created in Delivera
 # Import Splinter, BeautifulSoup, and Pandas
 from splinter import Browser
 from bs4 import BeautifulSoup as soup
-import pandas as pd
-import datetime as dt
-
+import pandas as pd 
+import datetime as dt 
 
 def scrape_all():
-    # Initiate headless driver for deployment
+    # Initiate headless driver
     browser = Browser("chrome", executable_path="chromedriver", headless=True)
+    # Set executable path and initialize the chrome browser in splinter 
+    #executable_path = {'executable_path': '/usr/local/bin/chromedriver'}
+    #browser = Browser('chrome', **executable_path)
 
-    news_title, news_paragraph = mars_news(browser)
-
-    # Run all scraping functions and store results in a dictionary
-    data = {
+    # Since these are pairs 
+    news_title, news_paragraph= mars_news(browser)
+    hemisphere_image_urls=hemisphere(browser)
+    # Run all scraping functions and store results in dictionary 
+    data={
         "news_title": news_title,
         "news_paragraph": news_paragraph,
         "featured_image": featured_image(browser),
         "facts": mars_facts(),
-        "last_modified": dt.datetime.now(),
-        "hemispheres": hemispheres(browser)
+        "hemispheres": hemisphere_image_urls,
+        "last_modified": dt.datetime.now()
     }
 
     # Stop webdriver and return data
@@ -209,134 +228,135 @@ def scrape_all():
     return data
 
 
+## > SCRAPE MARS NEWS <
+
 def mars_news(browser):
 
-    # Scrape Mars News
-    # Visit the mars nasa news site
-    url = 'https://mars.nasa.gov/news/'
+    # visit NASA website 
+    url= 'https://mars.nasa.gov/news/'
     browser.visit(url)
 
-    # Optional delay for loading the page
+    #Optional delay for website 
     browser.is_element_present_by_css("ul.item_list li.slide", wait_time=1)
 
-    # Convert the browser html to a soup object and then quit the browser
-    html = browser.html
-    news_soup = soup(html, 'html.parser')
+    # HTML Parser. Convert the brpwser html to a soup object and then quit the browser
+    html= browser.html 
+    news_soup= soup(html, 'html.parser')
 
     # Add try/except for error handling
     try:
-        slide_elem = news_soup.select_one("ul.item_list li.slide")
-        # Use the parent element to find the first 'a' tag and save it as 'news_title'
-        news_title = slide_elem.find("div", class_="content_title").get_text()
-        # Use the parent element to find the paragraph text
-        news_p = slide_elem.find("div", class_="article_teaser_body").get_text()
+        slide_elem= news_soup.select_one('ul.item_list li.slide')
+        # Get Title
+        news_title=slide_elem.find('div', class_= 'content_title').get_text()
+        # Get article body
+        news_p= slide_elem.find('div', class_='article_teaser_body').get_text()
 
     except AttributeError:
-        return None, None
+        return None,None
 
     return news_title, news_p
 
 
+## > SCRAPE FEATURED IMAGES <
+
 def featured_image(browser):
-    # Visit URL
-    url = 'https://www.jpl.nasa.gov/spaceimages/?search=&category=Mars'
+
+    # Visit URL 
+    url= 'https://www.jpl.nasa.gov/spaceimages/?search=&category=Mar'
     browser.visit(url)
 
-    # Find and click the full image button
-    full_image_elem = browser.find_by_id('full_image')[0]
+    # Find and click the full_image button
+    full_image_elem= browser.find_by_id('full_image')[0]
     full_image_elem.click()
 
-    # Find the more info button and click that
+    # Find the more info button and click that 
     browser.is_element_present_by_text('more info', wait_time=1)
-    more_info_elem = browser.links.find_by_partial_text('more info')
+
+    more_info_elem=browser.links.find_by_partial_text('more info')
     more_info_elem.click()
 
     # Parse the resulting html with soup
-    html = browser.html
-    img_soup = soup(html, 'html.parser')
+    html=browser.html
+    img_soup=soup(html, 'html.parser')
 
     # Add try/except for error handling
     try:
-        # Find the relative image url
-        img_url_rel = img_soup.select_one('figure.lede a img').get("src")
 
+        # We are telling soup to go to figure tag, then within that look for an 'a' tag then within that look for a 'img' tag
+        img_url_rel= img_soup.select_one('figure.lede a img').get("src")
+    
     except AttributeError:
         return None
-
-    # Use the base url to create an absolute url
-    img_url = f'https://www.jpl.nasa.gov{img_url_rel}'
+    # Need to get the FULL URL: Only had relative path before
+    img_url= f'https://www.jpl.nasa.gov{img_url_rel}'
 
     return img_url
 
+
+## > SCRAPE FACTS ABOUT MARS <
+
 def mars_facts():
+    
     # Add try/except for error handling
     try:
-        # Use 'read_html' to scrape the facts table into a dataframe
-        df = pd.read_html('http://space-facts.com/mars/')[0]
+        # Creating DF by telling function to look for first html table in site it encounters by indexing it to zero
+        df=pd.read_html('http://space-facts.com/mars/')[0]
 
+    # BaseException, catches multiple types of errors
     except BaseException:
         return None
+    
+    # Assigning columns, and set 'description' as index 
+    df.columns=['description', 'value']
+    df.set_index('description', inplace=True)
 
-    # Assign columns and set index of dataframe
-    df.columns=['Description', 'Mars']
-    df.set_index('Description', inplace=True)
+    #Convert back to HTML format, add bootstrap
+    return df.to_html()
 
-    # Convert dataframe into HTML format, add bootstrap
-    return df.to_html(classes="table table-striped")
+## > SCRAPE HEMISPHERE <
 
-if __name__ == "__main__":
-
-    # If running as script, print scraped data
-    print(scrape_all())
-
-def hemispheres(browser):
-    # 1. Use browser to visit the URL 
-    url = 'https://astrogeology.usgs.gov/search/results?q=hemisphere+enhanced&k1=target&v1=Mars'
+def hemisphere(browser):
+    url='https://astrogeology.usgs.gov/search/results?q=hemisphere+enhanced&k1=target&v1=Mars'
     browser.visit(url)
 
-    # 2. Create a list to hold the images and titles.
+
     hemisphere_image_urls = []
 
-    #items = browser.find_by_css('a.product-item h3')
-    # 3. Write code to retrieve the image urls and titles for each hemisphere.
-    for i in range(4):
-        #create empty dictionary
-        #hemispheres = {}
-        browser.find_by_css('a.product-item h3')[i].click()
-        #element = browser.find_link_by_text('Sample').first
-        #img_url = element['href']
-        #title = browser.find_by_css("h2.title").text
-        #hemispheres["img_url"] = img_url
-        #hemispheres["title"] = title
-        hemisphere_data = scrape_hemisphere(browser.html)
-        hemisphere_image_urls.append(hemisphere_data)
+    imgs_links= browser.find_by_css("a.product-item h3")
+
+    for x in range(len(imgs_links)):
+        hemisphere={}
+
+        # Find elements going to click link 
+        browser.find_by_css("a.product-item h3")[x].click()
+
+        # Find sample Image link
+        sample_img= browser.find_link_by_text("Sample").first
+        hemisphere['img_url']=sample_img['href']
+
+        # Get hemisphere Title
+        hemisphere['title']=browser.find_by_css("h2.title").text
+
+        #Add Objects to hemisphere_img_urls list
+        hemisphere_image_urls.append(hemisphere)
+
+        # Go Back
         browser.back()
     return hemisphere_image_urls
 
+if __name__== "__main__":
+    # If running as script, print scrapped data
+    print(scrape_all())
 
-def scrape_hemisphere(html_text):
-    # parse html text
-    hemi_soup = soup(html_text, "html.parser")
-    # adding try/except for error handling
-    try:
-        title_elem = hemi_soup.find("h2", class_="title").get_text()
-        sample_elem = hemi_soup.find("a", text="Sample").get("href")
-    except AttributeError:
-        # Image error will return None, for better front-end handling
-        title_elem = None
-        sample_elem = None
-    hemispheres = {
-        "title": title_elem,
-        "img_url": sample_elem
-    }
-    return hemispheres
-
- # By Emmanuel Martinez   
+# By Emmanuel Martinez
 ````
 
 ![name-of-you-image](https://github.com/emmanuelmartinezs/Mission-to-Mars/blob/main/Resources/Images/2.1.JPG?raw=true)
 
+
+
 2. **The Mongo database is updated to contain the full-resolution image URL and title for each hemisphere image.**
+
 
 > Image with `Python`, `MongoDB` & `HTML` Code below.
 
@@ -345,45 +365,135 @@ def scrape_hemisphere(html_text):
 
 ````python
 from flask import Flask, render_template
+from flask import Flask, render_template
 from flask_pymongo import PyMongo
 import scraping
 
-app = Flask(__name__)
+app= Flask(__name__)
+
+# Use flask_pymongo to set up mongo connection
+app.config['MONGO_URI']= "mongodb://localhost:27017/mars_app"
+mongo=PyMongo(app)
+
+# Set Up Routes
+@app.route("/")
+def index():
+    mars=mongo.db.mars.find_one()
+    return render_template('index.html', mars=mars)
+
+@app.route("/scrape")
+def scrape():
+    mars=mongo.db.mars
+    #holds newly scraped data, referencing scrape_all() function in scraping.py file
+    mars_data=scraping.scrape_all()
+    mars.update({},mars_data,upsert=True)
+    return "Scraping Successful"
+
+if __name__ == "__main__":
+    app.run(debug=True)
 ````
 
 ![name-of-you-image](https://github.com/emmanuelmartinezs/Mission-to-Mars/blob/main/Resources/Images/2.2.JPG?raw=true)
 
-3. ​**The index.html file contains code that will display the full-resolution image URL and title for each hemisphere image.**
+
+
+3. ​**The `index.html` file contains code that will display the full-resolution image URL and title for each hemisphere image.**
+
 
 > Image with `Python`, `MongoDB` & `HTML` Code below.
 
 **Code and Image**
 
 
-````python
-from flask import Flask, render_template
-from flask_pymongo import PyMongo
-import scraping
+````html
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Mission to Mars</title>
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+    />
+  </head>
+  <body>
+    <div class="container">
+      <!-- Add Jumbotron to Header -->
+      <div class="jumbotron text-center" style="background-image: url('https://cdn.hipwallpaper.com/i/20/93/icQLoP.jpg'); background-position: center; background-size: cover;height: 250px;">
+        <h1 style="color:white">Mission to Mars</h1>
+        <!-- Add a button to activate scraping script -->
+        <p><a class="btn btn-danger btn-xs" href="/scrape" role="button">Scrape New Data</a></p>
+      </div>
 
-app = Flask(__name__)
+      <!-- Add section for Mars News -->
+      <div class="row" id="mars-news">
+        <div class="col-md-12">
+          <div class="media">
+            <div class="media-body">
+              <h2>Latest Mars News</h2>
+              <h4 class="media-heading">{{ mars.news_title }}</h4>
+              <p>{{ mars.news_paragraph }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Section for Featured Image and Facts table -->
+      <div class="row" id="mars-featured-image">
+        <div class="col-lg-8 col-md-8 col-sm-12">
+          <h2>Featured Mars Image</h2>
+          <!-- if images is False/None/non-existent, then default to error message -->
+          <img
+            src="{{mars.featured_image | default('static/images/error.png', true) }}"
+            class="img-responsive"
+            alt="Responsive image"
+          />
+        </div>
+
+        <div class="col-lg-4 col-md-4 col-sm-12">
+          <!-- Mars Facts -->
+          <div class="table" id="mars-facts">
+            <h4>Mars Facts</h4>
+            {{ mars.facts | safe }}
+          </div>
+        </div>
+      </div>
+
+      <!-- Section for Mars Hemispheres -->
+      <div class="row" id="mars-hemispheres">
+        <div class="page-header">
+          <h2 class="text-center">Mars Hemispheres</h2>
+        </div>
+
+        {% for hemisphere in mars.hemispheres %}
+        <div class="col-md-6">
+          <div class="thumbnail">
+            <img src="{{hemisphere.img_url | default('static/images/error.png', true)}}" alt="Responsive image" class="img-responsive" >
+            <div class="caption">
+              <h3>{{hemisphere.title}}</h3>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  </body>
+</html>
 ````
 
 ![name-of-you-image](https://github.com/emmanuelmartinezs/Mission-to-Mars/blob/main/Resources/Images/2.3.JPG?raw=true)
 
+
+
 4. **After the scraping has been completed, the web app contains all the information from this module and the full-resolution images and titles for the four hemisphere images.**
+
 
 > Image with `Python`, `MongoDB` & `HTML` Code below.
 
-**Code and Image**
+**Code Image and Browser In Use**
 
-
-````python
-from flask import Flask, render_template
-from flask_pymongo import PyMongo
-import scraping
-
-app = Flask(__name__)
-````
 
 ![name-of-you-image](https://github.com/emmanuelmartinezs/Mission-to-Mars/blob/main/Resources/Images/2.4.JPG?raw=true)
 

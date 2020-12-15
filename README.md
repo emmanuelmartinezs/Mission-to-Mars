@@ -483,9 +483,6 @@ if __name__ == "__main__":
 </html>
 ````
 
-![name-of-you-image](https://github.com/emmanuelmartinezs/Mission-to-Mars/blob/main/Resources/Images/2.3.JPG?raw=true)
-
-
 
 4. **After the scraping has been completed, the web app contains all the information from this module and the full-resolution images and titles for the four hemisphere images.**
 

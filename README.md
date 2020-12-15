@@ -47,14 +47,19 @@ Using BeautifulSoup and Splinter, you’ll scrape full-resolution images of Mars
 
 
 ````python
-from flask import Flask, render_template
-from flask_pymongo import PyMongo
-import scraping
+# Mission to Mars (Module Code)
+# by Emmanuel Martinez
 
-app = Flask(__name__)
+# Import Splinter and BeautifulSoup
+import pandas as pd
+from splinter import Browser
+from bs4 import BeautifulSoup as soup
+from webdriver_manager.chrome import ChromeDriverManager
 ````
 
 ![name-of-you-image](https://github.com/emmanuelmartinezs/Mission-to-Mars/blob/main/Resources/Images/1.1.JPG?raw=true)
+
+![name-of-you-image](https://github.com/emmanuelmartinezs/Mission-to-Mars/blob/main/Resources/Images/1.1.1.JPG?raw=true)
 
 2. **Download the `Mission_to_Mars_Challenge_starter_code.ipynb`, copy the starter code, and paste at the end of your `Mission_to_Mars_Challenge.ipynb` file.**
 
@@ -64,14 +69,18 @@ app = Flask(__name__)
 
 
 ````python
-from flask import Flask, render_template
-from flask_pymongo import PyMongo
-import scraping
+# Here start the Mission to Mars Challenge Starter Code
+# by Emmanuel Martinez
 
-app = Flask(__name__)
+# Import Splinter, BeautifulSoup, and Pandas
+from splinter import Browser
+from bs4 import BeautifulSoup as soup
+import pandas as pd
 ````
 
 ![name-of-you-image](https://github.com/emmanuelmartinezs/Mission-to-Mars/blob/main/Resources/Images/1.2.JPG?raw=true)
+
+![name-of-you-image](https://github.com/emmanuelmartinezs/Mission-to-Mars/blob/main/Resources/Images/1.2.1.JPG?raw=true)
 
 3. ​**In Step 1, use your browser to visit the [`Mars Hemispheres`](https://astrogeology.usgs.gov/search/results?q=hemisphere+enhanced&k1=target&v1=Mars) website to view the hemisphere images.**
 

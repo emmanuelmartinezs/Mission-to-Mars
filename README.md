@@ -510,20 +510,21 @@ For this part of the Challenge, update your web app to make it mobile-responsive
 
 > Image with `Python`, `MongoDB` & `HTML` Code below.
 
-**Code and Image**
-
-
-````python
-from flask import Flask, render_template
-from flask_pymongo import PyMongo
-import scraping
-
-app = Flask(__name__)
-````
+**iPhone X - Mobile View**
 
 ![name-of-you-image](https://github.com/emmanuelmartinezs/Mission-to-Mars/blob/main/Resources/Images/3.1.JPG?raw=true)
     
-    
+
+**iPad - Tablet View**
+
+![name-of-you-image](https://github.com/emmanuelmartinezs/Mission-to-Mars/blob/main/Resources/Images/3.1.1.JPG?raw=true)
+
+
+**Galaxy S5 - Mobile View**
+
+![name-of-you-image](https://github.com/emmanuelmartinezs/Mission-to-Mars/blob/main/Resources/Images/3.1.2.JPG?raw=true)
+
+
 2. **Two additional Bootstrap 3 components are used to style the webpage.**
 
 > Image with `Python`, `MongoDB` & `HTML` Code below.
@@ -531,12 +532,17 @@ app = Flask(__name__)
 **Code and Image**
 
 
-````python
-from flask import Flask, render_template
-from flask_pymongo import PyMongo
-import scraping
-
-app = Flask(__name__)
+````html
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Mission to Mars</title>
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+    />
+  </head>
 ````
 
 ![name-of-you-image](https://github.com/emmanuelmartinezs/Mission-to-Mars/blob/main/Resources/Images/3.2.JPG?raw=true)

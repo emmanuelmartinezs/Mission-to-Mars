@@ -90,14 +90,17 @@ import pandas as pd
 
 
 ````python
-from flask import Flask, render_template
-from flask_pymongo import PyMongo
-import scraping
+# 1. Use browser to visit the URL 
+url = 'https://astrogeology.usgs.gov/search/results?q=hemisphere+enhanced&k1=target&v1=Mars'
+browser.visit(url)
 
-app = Flask(__name__)
+# 2. Create a list to hold the images and titles.
+hemisphere_image_urls = []
 ````
 
 ![name-of-you-image](https://github.com/emmanuelmartinezs/Mission-to-Mars/blob/main/Resources/Images/1.3.JPG?raw=true)
+
+![name-of-you-image](https://github.com/emmanuelmartinezs/Mission-to-Mars/blob/main/Resources/Images/1.3.1.JPG?raw=true)
 
 4. **Use the DevTools to inspect the page for the proper elements to scrape. You will need to retrieve the full-resolution image for each of Mars's hemispheres.**
 
@@ -107,16 +110,51 @@ app = Flask(__name__)
 
 
 ````python
-from flask import Flask, render_template
-from flask_pymongo import PyMongo
-import scraping
+# 3. Write code to retrieve the image urls and titles for each hemisphere.
+for i in range(4):
+    #create empty dictionary
+    hemispheres = {}
+    browser.find_by_css('a.product-item h3')[i].click()
+    element = browser.find_link_by_text('Sample').first
+    img_url = element['href']
+    title = browser.find_by_css("h2.title").text
+    hemispheres["img_url"] = img_url
+    hemispheres["title"] = title
+    hemisphere_image_urls.append(hemispheres)
+    browser.back()
 
-app = Flask(__name__)
+# 4. Print the list that holds the dictionary of each image url and title.
+hemisphere_image_urls
+
+[{'img_url': 'https://astropedia.astrogeology.usgs.gov/download/Mars/Viking/cerberus_enhanced.tif/full.jpg',
+  'title': 'Cerberus Hemisphere Enhanced'},
+ {'img_url': 'https://astropedia.astrogeology.usgs.gov/download/Mars/Viking/schiaparelli_enhanced.tif/full.jpg',
+  'title': 'Schiaparelli Hemisphere Enhanced'},
+ {'img_url': 'https://astropedia.astrogeology.usgs.gov/download/Mars/Viking/syrtis_major_enhanced.tif/full.jpg',
+  'title': 'Syrtis Major Hemisphere Enhanced'},
+ {'img_url': 'https://astropedia.astrogeology.usgs.gov/download/Mars/Viking/valles_marineris_enhanced.tif/full.jpg',
+  'title': 'Valles Marineris Hemisphere Enhanced'}]
 ````
+
+**Code Image**
 
 ![name-of-you-image](https://github.com/emmanuelmartinezs/Mission-to-Mars/blob/main/Resources/Images/1.4.JPG?raw=true)
 
+**Cerberus Hemisphere Enhanced**
 
+![name-of-you-image](https://github.com/emmanuelmartinezs/Mission-to-Mars/blob/main/Resources/Images/1.4.1.JPG?raw=true)
+
+**Schiaparelli Hemisphere Enhanced**
+
+![name-of-you-image](https://github.com/emmanuelmartinezs/Mission-to-Mars/blob/main/Resources/Images/1.4.2.JPG?raw=true)
+
+**Syrtis Major Hemisphere Enhanced**
+
+![name-of-you-image](https://github.com/emmanuelmartinezs/Mission-to-Mars/blob/main/Resources/Images/1.4.3.JPG?raw=true)
+
+**Valles Marineris Hemisphere Enhanced**
+
+![name-of-you-image](https://github.com/emmanuelmartinezs/Mission-to-Mars/blob/main/Resources/Images/1.4.4.JPG?raw=true)
 
 ## Deliverable 2: Update the Web App with Mars’s Hemisphere Images and Titles
 ### Deliverable Requirements:
